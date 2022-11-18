@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "683071402319",
+    "project_id": "tubes-kelompok10",
+    "storage_bucket": "tubes-kelompok10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683071402319:android:47e1b2314a9efb3b1bd53a",
+        "android_client_info": {
+          "package_name": "com.example.tubes_kelompok10"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683071402319-3kv7f70nf317lh6osdssdenv4nf11aaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1dsUiP2HwrPkGa2ouKtaoJZNvbrq4f2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683071402319-3kv7f70nf317lh6osdssdenv4nf11aaj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,35 @@
+{
+  "results": [
+    {
+      "geometry": {
+        "location": {
+          "lat": -7.779433,
+          "lng": 110.415782
+        }
+      },
+      "name": "Kantor Pusat",
+      "vicinity": "Jl. Babarsari No.43. Janti, Caturtunggal,Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281"
+    },
+    {
+      "geometry": {
+        "location": {
+          "lat": -7.7804399,
+          "lng": 110.4119222
+        }
+      },
+      "name": "Kantor Cabang 1",
+      "vicinity": "Jl. Babarsari No.44, Janti, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281"
+    },
+    {
+      "geometry": {
+        "location": {
+          "lat": -7.7821544,
+          "lng": 110.4124366
+        }
+      },
+      "name": "Kantor Cabang 2",
+      "vicinity": "Jl. Babarsari Jl. Tambak Bayan No.2, Janti, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281"
+    }
+  ],
+  "status": "OK"
+}
