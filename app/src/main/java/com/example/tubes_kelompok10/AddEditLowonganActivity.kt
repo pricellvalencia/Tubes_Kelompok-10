@@ -30,30 +30,27 @@ class AddEditLowonganActivity : AppCompatActivity() {
             "Ilmu Hukum"
         )
     }
-    private var etNama: EditText? = null
-    private var etNPM: EditText? = null
-    private var edFakultas: AutoCompleteTextView? = null
-    private var edProdi: AutoCompleteTextView? = null
+    private var etNamaPerusahaan: EditText? = null
+    private var etPosisi: EditText? = null
+    private var edTanggalPenutupan: EditText? = null
     private var layoutLoading: LinearLayout? = null
     private var queue: RequestQueue? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_edit)
+        setContentView(R.layout.activity_add_edit_lowongan)
 
         queue = Volley.newRequestQueue(this)
-        etNama = findViewById(R.id.et_nama)
-        etNPM = findViewById(R.id.et_npm)
-        edFakultas = findViewById(R.id.ed_fakultas)
-        edProdi = findViewById(R.id.ed_prodi)
+        etNamaPerusahaan = findViewById(R.id.et_namaPerusahaan)
+        etPosisi = findViewById(R.id.et_posisi)
+        edTanggalPenutupan = findViewById(R.id.ed_tanggalPenutupan)
         layoutLoading = findViewById(R.id.layout_loading)
 
-        setExposedDropDownMenu()
 
         val btnCancel = findViewById<Button>(R.id.btn_cancel)
         btnCancel.setOnClickListener {finish()}
         val btnSave = findViewById<Button>(R.id.btn_save)
-        val tvTitle = findViewById<TextView>(R.id.tv_tittle)
+        val tvTitle = findViewById<TextView>(R.id.tv_title)
         val id = intent.getLongExtra("id", -1)
         if(id==-1L) {
             tvTitle.setText("Tambah Lowongan")
