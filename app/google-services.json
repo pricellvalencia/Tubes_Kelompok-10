@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "683071402319",
+    "project_number": "430997514463",
+    "firebase_url": "https://tubes-kelompok10-default-rtdb.firebaseio.com",
     "project_id": "tubes-kelompok10",
     "storage_bucket": "tubes-kelompok10.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:683071402319:android:47e1b2314a9efb3b1bd53a",
+        "mobilesdk_app_id": "1:430997514463:android:35d16d3c2bdec87eb1216a",
         "android_client_info": {
           "package_name": "com.example.tubes_kelompok10"
         }
       },
       "oauth_client": [
         {
-          "client_id": "683071402319-3kv7f70nf317lh6osdssdenv4nf11aaj.apps.googleusercontent.com",
+          "client_id": "430997514463-tjhtt0rs8cpaapgpfs65dr6foj8erjkh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA1dsUiP2HwrPkGa2ouKtaoJZNvbrq4f2Q"
+          "current_key": "AIzaSyAjtnl8RpbONsEWkEHdyM6enxzr3CsamKI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "683071402319-3kv7f70nf317lh6osdssdenv4nf11aaj.apps.googleusercontent.com",
+              "client_id": "430997514463-tjhtt0rs8cpaapgpfs65dr6foj8erjkh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
