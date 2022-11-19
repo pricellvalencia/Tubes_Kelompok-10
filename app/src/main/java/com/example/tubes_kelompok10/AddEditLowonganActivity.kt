@@ -19,17 +19,6 @@ import java.nio.charset.StandardCharsets
 
 class AddEditLowonganActivity : AppCompatActivity() {
 
-    companion object{
-        private val FAKULTAS_LIST = arrayOf("FTI", "FT", "FTB", "FBE", "FISIP", "FH")
-        private val PRODI_LIST = arrayOf(
-            "Informatika",
-            "Arsitektur",
-            "Biologi",
-            "Manajemen",
-            "Ilmu Komunikasi",
-            "Ilmu Hukum"
-        )
-    }
     private var etNamaPerusahaan: EditText? = null
     private var etPosisi: EditText? = null
     private var edTanggalPenutupan: EditText? = null
