@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (!checkLogin) return@OnClickListener
-            val moveHome = Intent(this@MainActivity, HomeActivity::class.java)
+            val moveHome = Intent(this@MainActivity, LowonganActivity::class.java)
             moveHome.putExtra("Person", mBundle)
             startActivity(moveHome)
 

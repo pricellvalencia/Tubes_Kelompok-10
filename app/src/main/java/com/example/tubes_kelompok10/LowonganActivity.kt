@@ -40,7 +40,7 @@ class LowonganActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_lowongan)
 
         queue = Volley.newRequestQueue(this)
         layoutLoading = findViewById(R.id.layout_loading)

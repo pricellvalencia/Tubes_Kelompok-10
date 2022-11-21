@@ -21,8 +21,8 @@ class HomeActivity : AppCompatActivity() {
         bottomNav.setOnNavigationItemReselectedListener {
             when (it.itemId) {
                 R.id.menu_home -> {
-                    loadFragment(FragmentHome())
-                    return@setOnNavigationItemReselectedListener
+                    val intent = Intent(this, LowonganActivity::class.java)
+                    startActivity(intent)
                 }
                 R.id.menu_location -> {
                     val intent = Intent(this, LocationActivity::class.java)
