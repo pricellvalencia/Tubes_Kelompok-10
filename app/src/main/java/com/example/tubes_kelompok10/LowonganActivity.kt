@@ -113,7 +113,7 @@ class LowonganActivity : AppCompatActivity() {
         queue!!.add(stringRequest)
     }
 
-    fun deleteMahasiswa(id: Long) {
+    fun deleteLowongan(id: Long) {
         setLoading(true)
         val stringRequest: StringRequest = object :
             StringRequest(Method.DELETE, MahasiswaApi.DELETE_URL + id, Response.Listener { response ->
