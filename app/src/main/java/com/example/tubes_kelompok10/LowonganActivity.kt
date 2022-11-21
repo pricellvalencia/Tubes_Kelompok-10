@@ -1,5 +1,6 @@
 package com.example.tubes_kelompok10
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -18,17 +19,17 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
-import com.example.tubes_kelompok10.adapters.MahasiswaAdapter
-import com.example.tubes_kelompok10.api.MahasiswaApi
-import com.example.tubes_kelompok10.models.Mahasiswa
+import com.example.tubes_kelompok10.adapters.LowonganAdapter
+import com.example.tubes_kelompok10.api.LowonganApi
+import com.example.tubes_kelompok10.models.Lowongan
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
 class LowonganActivity : AppCompatActivity() {
 
-    private var srMahasiswa: SwipeRefreshLayout? = null
+    private var srLowongan: SwipeRefreshLayout? = null
     private var adapter: LowonganAdapter? = null
-    private var svMahasiswa: SearchView? = null
+    private var svLowongan: SearchView? = null
     private var layoutLoading: LinearLayout? = null
     private var queue: RequestQueue? = null
 
@@ -36,17 +37,18 @@ class LowonganActivity : AppCompatActivity() {
         const val LAUNCH_ADD_ACTIVITY = 123
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         queue = Volley.newRequestQueue(this)
         layoutLoading = findViewById(R.id.layout_loading)
-        srMahasiswa =  findViewById(R.id.sr_mahasiswa)
-        svMahasiswa = findViewById(R.id.sv_mahasiswa)
+        srLowongan =  findViewById(R.id.sr_lowongan)
+        svLowongan = findViewById(R.id.sv_lowongan)
 
-        srMahasiswa?.setOnRefreshListener( { allMahasiswa() })
-        svMahasiswa?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        srLowongan?.setOnRefreshListener( { allLowongan() })
+        svLowongan?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(p0: String?): Boolean {
                 return false
             }
@@ -59,48 +61,48 @@ class LowonganActivity : AppCompatActivity() {
 
         val fabAdd = findViewById<FloatingActionButton>(R.id.fab_add)
         fabAdd.setOnClickListener {
-            val  i = Intent( this@MainActivity, AddEditActivity::class.java)
+            val  i = Intent( this@LowonganActivity, AddEditLowonganActivity::class.java)
             startActivityForResult(i, LAUNCH_ADD_ACTIVITY)
         }
 
-        val rvProduk = findViewById<RecyclerView>(R.id.rv_mahasiswa)
-        adapter = MahasiswaAdapter(ArrayList(), this)
+        val rvProduk = findViewById<RecyclerView>(R.id.rv_lowongan)
+        adapter = LowonganAdapter(ArrayList(), this)
         rvProduk.layoutManager = LinearLayoutManager(this)
         rvProduk.adapter = adapter
-        allMahasiswa()
+        allLowongan()
     }
 
-    private fun allMahasiswa() {
-        srMahasiswa!!.isRefreshing = true
+    private fun allLowongan() {
+        srLowongan!!.isRefreshing = true
         val stringRequest: StringRequest = object :
-            StringRequest (Method.GET, MahasiswaApi.GET_ALL_URL, Response.Listener { response ->
+            StringRequest (Method.GET, LowonganApi.GET_ALL_URL, Response.Listener { response ->
                 val gson = Gson()
-                var mahasiswa: Array<Mahasiswa> =
-                    gson.fromJson(response, Array<Mahasiswa>::class.java)
+                var lowongan: Array<Lowongan> =
+                    gson.fromJson(response, Array<Lowongan>::class.java)
 
-                adapter!!.setMahasiswaList(mahasiswa)
-                adapter!!.filter.filter(svMahasiswa!!.query)
-                srMahasiswa!!.isRefreshing = false
+                adapter!!.setLowonganList(lowongan)
+                adapter!!.filter.filter(svLowongan!!.query)
+                srLowongan!!.isRefreshing = false
 
-                if (mahasiswa.isEmpty())
-                    Toast.makeText(this@MainActivity, "Data Berhasil Diambil!!", Toast.LENGTH_SHORT)
+                if (lowongan.isEmpty())
+                    Toast.makeText(this@LowonganActivity, "Data Berhasil Diambil!!", Toast.LENGTH_SHORT)
                         .show()
                 else
-                    Toast.makeText(this@MainActivity, "Data Kosong", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@LowonganActivity, "Data Kosong", Toast.LENGTH_SHORT)
                         .show()
             }, Response.ErrorListener { error ->
-                srMahasiswa!!.isRefreshing = false
+                srLowongan!!.isRefreshing = false
                 try {
                     val responseBody =
                         String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
                     Toast.makeText(
-                        this@MainActivity,
+                        this@LowonganActivity,
                         errors.getString("message"),
                         Toast.LENGTH_SHORT
                     ).show()
                 } catch (e: Exception) {
-                    Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LowonganActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)
@@ -116,26 +118,26 @@ class LowonganActivity : AppCompatActivity() {
     fun deleteLowongan(id: Long) {
         setLoading(true)
         val stringRequest: StringRequest = object :
-            StringRequest(Method.DELETE, MahasiswaApi.DELETE_URL + id, Response.Listener { response ->
+            StringRequest(Method.DELETE, LowonganApi.DELETE_URL + id, Response.Listener { response ->
                 setLoading(false)
 
                 val gson = Gson()
-                var mahasiswa = gson.fromJson(response, Mahasiswa::class.java)
-                if(mahasiswa != null)
-                    Toast.makeText(this@MainActivity, "Data Berhasil Dihapus", Toast.LENGTH_SHORT).show()
-                allMahasiswa()
+                var lowongan = gson.fromJson(response, Lowongan::class.java)
+                if(lowongan != null)
+                    Toast.makeText(this@LowonganActivity, "Data Berhasil Dihapus", Toast.LENGTH_SHORT).show()
+                allLowongan()
             }, Response.ErrorListener { error ->
                 setLoading(false)
                 try{
                     val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
                     val errors = JSONObject(responseBody)
                     Toast.makeText(
-                        this@MainActivity,
+                        this@LowonganActivity,
                         errors.getString("message"),
                         Toast.LENGTH_SHORT
                     ).show()
                 } catch (e: java.lang.Exception) {
-                    Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LowonganActivity, e.message, Toast.LENGTH_SHORT).show()
                 }
             }) {
             @Throws(AuthFailureError::class)
@@ -150,7 +152,7 @@ class LowonganActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == LAUNCH_ADD_ACTIVITY && resultCode == RESULT_OK) allMahasiswa()
+        if (requestCode == LAUNCH_ADD_ACTIVITY && resultCode == RESULT_OK) allLowongan()
     }
 
     private fun setLoading(isLoading: Boolean) {
