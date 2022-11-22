@@ -2,7 +2,7 @@ package com.example.tubes_kelompok10.api
 
 class LowonganApi {
     companion object {
-        val BASE_URL = "https://tubes-kelompok10-default-rtdb.firebaseio.com"
+        val BASE_URL = "https://6368bba315219b84960558d7.mockapi.io/api/"
 
         val GET_ALL_URL = BASE_URL + "lowongan/"
         val GET_BY_ID_URL = BASE_URL + "lowongan/"

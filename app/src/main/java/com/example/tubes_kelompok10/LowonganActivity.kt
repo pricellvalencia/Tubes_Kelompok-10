@@ -22,11 +22,13 @@ import com.google.gson.Gson
 import com.example.tubes_kelompok10.adapters.LowonganAdapter
 import com.example.tubes_kelompok10.api.LowonganApi
 import com.example.tubes_kelompok10.models.Lowongan
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
 class LowonganActivity : AppCompatActivity() {
 
+    lateinit var bottomNav : BottomNavigationView
     private var srLowongan: SwipeRefreshLayout? = null
     private var adapter: LowonganAdapter? = null
     private var svLowongan: SearchView? = null
@@ -42,6 +44,35 @@ class LowonganActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lowongan)
 
+        bottomNav = findViewById(R.id.bottomNav) as BottomNavigationView
+        bottomNav.setOnNavigationItemReselectedListener {
+            when (it.itemId) {
+                R.id.menu_home -> {
+                    val intent = Intent(this, LowonganActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.menu_location -> {
+                    val intent = Intent(this, LocationActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.menu_profil -> {
+                    var moveProfile: Intent
+                    moveProfile = Intent(this, ProfilActivity::class.java)
+                    moveProfile.putExtra("Person", intent.getBundleExtra("Person"))
+                    startActivity(moveProfile)
+                    return@setOnNavigationItemReselectedListener
+                }
+                R.id.menu_notification ->{
+                    val intent = Intent(this, NotificationsActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.menu_exit -> {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
+
+            }
+        }
         queue = Volley.newRequestQueue(this)
         layoutLoading = findViewById(R.id.layout_loading)
         srLowongan =  findViewById(R.id.sr_lowongan)
@@ -70,6 +101,7 @@ class LowonganActivity : AppCompatActivity() {
         rvProduk.layoutManager = LinearLayoutManager(this)
         rvProduk.adapter = adapter
         allLowongan()
+
     }
 
     private fun allLowongan() {
