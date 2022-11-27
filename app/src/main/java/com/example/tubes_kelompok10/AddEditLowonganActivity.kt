@@ -1,11 +1,11 @@
 package com.example.tubes_kelompok10
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -14,8 +14,11 @@ import com.android.volley.toolbox.Volley
 import com.example.tubes_kelompok10.api.LowonganApi
 import com.example.tubes_kelompok10.models.Lowongan
 import com.google.gson.Gson
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
+
 
 class AddEditLowonganActivity : AppCompatActivity() {
 
@@ -219,5 +222,16 @@ class AddEditLowonganActivity : AppCompatActivity() {
             window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             layoutLoading!!.visibility = View.INVISIBLE
         }
+    }
+
+    fun onTimeSet(view: RadialPickerLayout?, hourOfDay: Int, minute: Int, second: Int) {
+        val time = "You picked the following time: " + hourOfDay + "h" + minute + "m" + second
+//        timeTextView.setText(time)
+    }
+
+    fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        val date =
+            "You picked the following date: " + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
+//        dateTextView.setText(date)
     }
 }
