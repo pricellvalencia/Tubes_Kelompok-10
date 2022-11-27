@@ -72,8 +72,6 @@ class CVActivity : AppCompatActivity() {
         FileNotFoundException::class
     )
     private fun createPdf(nama: String, ttl: String, tlp: String, email: String, pendidikan: String, pengalamankerja: String) {
-        //ini berguna untuk akses Writing ke Storage HP kalian dalam mode Download.
-        //harus diketik jangan COPAS!!!!
         val pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
         val file = File(pdfPath, "pdf_tubes_kelompok10.pdf")
         FileOutputStream(file)
@@ -84,15 +82,7 @@ class CVActivity : AppCompatActivity() {
         val document = Document(pdfDocument)
         pdfDocument.defaultPageSize = PageSize.A4
         document.setMargins(5f, 5f, 5f, 5f)
-        @SuppressLint("UseCompatLoadingForDrawables") val d = getDrawable(R.drawable.profillogo)
 
-        //penambahan gambar pada Gambar atas
-        val bitmap = (d as BitmapDrawable?)!!.bitmap
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        val bitmapData = stream.toByteArray()
-        val imageData = ImageDataFactory.create(bitmapData)
-        val image = Image(imageData)
         val cvpengguna = Paragraph("CURRICULUM VITAE").setBold().setFontSize(24f)
             .setTextAlignment(TextAlignment.CENTER)
         val group = Paragraph(
@@ -118,12 +108,6 @@ class CVActivity : AppCompatActivity() {
         table.addCell(Cell().add(Paragraph(pendidikan)))
         table.addCell(Cell().add(Paragraph("Pengamalan kerja")))
         table.addCell(Cell().add(Paragraph(pengalamankerja)))
-        val dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        table.addCell(Cell().add(Paragraph("Tanggal Buat PDF")))
-        table.addCell(Cell().add(Paragraph(LocalDate.now().format(dateTimeFormatter))))
-        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss a")
-        table.addCell(Cell().add(Paragraph("Pukul Pembuatan")))
-        table.addCell(Cell().add(Paragraph(LocalTime.now().format(timeFormatter))))
 
         //pembuatan QR CODE secara generate dengan bantuan IText7
         val barcodeQRCode = BarcodeQRCode(
@@ -134,14 +118,11 @@ class CVActivity : AppCompatActivity() {
                                         $email
                                         $pendidikan
                                         $pengalamankerja
-                                        ${LocalDate.now().format(dateTimeFormatter)}
-                                        ${LocalTime.now().format(timeFormatter)}
                                         """.trimIndent())
 
         val qrCodeObject = barcodeQRCode.createFormXObject(ColorConstants.BLACK, pdfDocument)
         val qrCodeImage = Image(qrCodeObject).setWidth(80f).setHorizontalAlignment(HorizontalAlignment.CENTER)
 
-        document.add(image)
         document.add(cvpengguna)
         document.add(group)
         document.add(table)
