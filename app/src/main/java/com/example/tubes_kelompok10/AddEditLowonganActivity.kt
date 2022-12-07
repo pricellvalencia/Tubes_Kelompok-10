@@ -14,8 +14,6 @@ import com.android.volley.toolbox.Volley
 import com.example.tubes_kelompok10.api.LowonganApi
 import com.example.tubes_kelompok10.models.Lowongan
 import com.google.gson.Gson
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
@@ -98,59 +96,71 @@ class AddEditLowonganActivity : AppCompatActivity() {
     private fun createLowongan(){
         setLoading(true)
 
-        val lowongan = Lowongan(
-            etNamaPerusahaan!!.text.toString(),
-            etPosisi!!.text.toString(),
-            edTanggalPenutupan!!.text.toString()
+        if (etNamaPerusahaan!!.text.toString().isEmpty()) {
+            Toast.makeText(this@AddEditLowonganActivity, "Nama perusahaan must be filled", Toast.LENGTH_SHORT).show()
+        }
+        else if (etPosisi!!.text.toString().isEmpty()) {
+            Toast.makeText(this@AddEditLowonganActivity, "Posisi must be filled", Toast.LENGTH_SHORT).show()
+        }
+        else if (edTanggalPenutupan!!.text.toString().isEmpty()) {
+            Toast.makeText(this@AddEditLowonganActivity, "Tanggal Penutupan must be filled", Toast.LENGTH_SHORT)
+                .show()
+        }
+        else{
+            val lowongan = Lowongan(
+                etNamaPerusahaan!!.text.toString(),
+                etPosisi!!.text.toString(),
+                edTanggalPenutupan!!.text.toString()
 
-        )
+            )
 
-        val stringRequest: StringRequest =
-            object : StringRequest(Method.POST, LowonganApi.ADD_URL, Response.Listener { response ->
-                val gson = Gson()
-                var lowongan = gson.fromJson(response, Lowongan::class.java)
-
-                if(lowongan != null)
-                    Toast.makeText(this@AddEditLowonganActivity, "Data Berhasil Ditambahkan", Toast.LENGTH_SHORT).show()
-
-                val returnIntent = Intent()
-                setResult(RESULT_OK, returnIntent)
-                finish()
-
-                setLoading(false)
-            }, Response.ErrorListener { error ->
-                setLoading(false)
-                try {
-                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
-                    val errors = JSONObject(responseBody)
-                    Toast.makeText(
-                        this@AddEditLowonganActivity,
-                        errors.getString("message"),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } catch (e: Exception){
-                    Toast.makeText(this@AddEditLowonganActivity, e.message,Toast.LENGTH_SHORT).show()
-                }
-            }) {
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String> {
-                    val headers = HashMap<String, String>()
-                    headers["Accept"] = "application/json"
-                    return headers
-                }
-
-                @Throws(AuthFailureError::class)
-                override fun getBody(): ByteArray {
+            val stringRequest: StringRequest =
+                object : StringRequest(Method.POST, LowonganApi.ADD_URL, Response.Listener { response ->
                     val gson = Gson()
-                    val requestBody = gson.toJson(lowongan)
-                    return requestBody.toByteArray(StandardCharsets.UTF_8)
-                }
+                    var lowongan = gson.fromJson(response, Lowongan::class.java)
 
-                override fun getBodyContentType(): String {
-                    return "application/json"
+                    if(lowongan != null)
+                        Toast.makeText(this@AddEditLowonganActivity, "Data Berhasil Ditambahkan", Toast.LENGTH_SHORT).show()
+
+                    val returnIntent = Intent()
+                    setResult(RESULT_OK, returnIntent)
+                    finish()
+
+                    setLoading(false)
+                }, Response.ErrorListener { error ->
+                    setLoading(false)
+                    try {
+                        val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                        val errors = JSONObject(responseBody)
+                        Toast.makeText(
+                            this@AddEditLowonganActivity,
+                            errors.getString("message"),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } catch (e: Exception){
+                        Toast.makeText(this@AddEditLowonganActivity, e.message,Toast.LENGTH_SHORT).show()
+                    }
+                }) {
+                    @Throws(AuthFailureError::class)
+                    override fun getHeaders(): Map<String, String> {
+                        val headers = HashMap<String, String>()
+                        headers["Accept"] = "application/json"
+                        return headers
+                    }
+
+                    @Throws(AuthFailureError::class)
+                    override fun getBody(): ByteArray {
+                        val gson = Gson()
+                        val requestBody = gson.toJson(lowongan)
+                        return requestBody.toByteArray(StandardCharsets.UTF_8)
+                    }
+
+                    override fun getBodyContentType(): String {
+                        return "application/json"
+                    }
                 }
-            }
-        queue!!.add(stringRequest)
+            queue!!.add(stringRequest)
+        }
     }
 
     private fun updateLowongan(id: Long) {
@@ -224,14 +234,4 @@ class AddEditLowonganActivity : AppCompatActivity() {
         }
     }
 
-    fun onTimeSet(view: RadialPickerLayout?, hourOfDay: Int, minute: Int, second: Int) {
-        val time = "You picked the following time: " + hourOfDay + "h" + minute + "m" + second
-//        timeTextView.setText(time)
-    }
-
-    fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        val date =
-            "You picked the following date: " + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
-//        dateTextView.setText(date)
-    }
 }
