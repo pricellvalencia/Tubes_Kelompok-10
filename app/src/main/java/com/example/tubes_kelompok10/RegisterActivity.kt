@@ -68,17 +68,17 @@ class RegisterActivity : AppCompatActivity() {
             if (username.isEmpty()) {
                 Toast.makeText(this@RegisterActivity, "Username must be filled", Toast.LENGTH_SHORT).show()
             }
-            else if (password.isEmpty()) {
-                Toast.makeText(this@RegisterActivity, "Password must be filled", Toast.LENGTH_SHORT).show()
-            }
             else if (email.isEmpty()) {
                 Toast.makeText(this@RegisterActivity, "Email must be filled", Toast.LENGTH_SHORT).show()
+            }
+            else if (noTelepon.isEmpty()) {
+                Toast.makeText(this@RegisterActivity, "Nomor Telepon must be filled", Toast.LENGTH_SHORT).show()
             }
             else if (tanggalLahir.isEmpty()) {
                 Toast.makeText(this@RegisterActivity, "Tanggal Lahir must be filled", Toast.LENGTH_SHORT).show()
             }
-            else if (noTelepon.isEmpty()) {
-                Toast.makeText(this@RegisterActivity, "Nomor Telepon must be filled", Toast.LENGTH_SHORT).show()
+            else if (password.isEmpty()) {
+                Toast.makeText(this@RegisterActivity, "Password must be filled", Toast.LENGTH_SHORT).show()
             }
             else{
                 check=true

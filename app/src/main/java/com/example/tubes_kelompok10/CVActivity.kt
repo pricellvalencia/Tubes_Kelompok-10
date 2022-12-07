@@ -54,9 +54,25 @@ class CVActivity : AppCompatActivity() {
 
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    if (nama.isEmpty() && ttl.isEmpty() && tlp.isEmpty() && email.isEmpty() && pendidikan.isEmpty() && pengalamankerja.isEmpty()) {
-                        Toast.makeText(applicationContext,"Semuanya Tidak boleh Kosong" , Toast.LENGTH_SHORT).show()
-                    }else {
+                    if (nama.isEmpty()) {
+                        Toast.makeText(applicationContext,"Nama must be filled" , Toast.LENGTH_SHORT).show()
+                    }
+                    else if(ttl.isEmpty()){
+                        Toast.makeText(applicationContext,"TTL must be filled" , Toast.LENGTH_SHORT).show()
+                    }
+                    else if(tlp.isEmpty()){
+                        Toast.makeText(applicationContext,"Telepon must be filled" , Toast.LENGTH_SHORT).show()
+                    }
+                    else if(email.isEmpty()){
+                        Toast.makeText(applicationContext,"Email must be filled" , Toast.LENGTH_SHORT).show()
+                    }
+                    else if(pendidikan.isEmpty()){
+                        Toast.makeText(applicationContext,"Pendidikan must be filled" , Toast.LENGTH_SHORT).show()
+                    }
+                    else if(pengalamankerja.isEmpty()){
+                        Toast.makeText(applicationContext,"Pengalaman Kerja must be filled" , Toast.LENGTH_SHORT).show()
+                    }
+                    else {
                         createPdf(nama, ttl, tlp, email, pendidikan, pengalamankerja)
                     }
                 }
