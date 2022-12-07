@@ -67,16 +67,13 @@ class MainActivity : AppCompatActivity() {
             if(intent.hasExtra("register")){
                 //pengecekan apakah inputan username kosong
                 if (usertemp.isEmpty()) {
-                    inputUsername.setError("Username must be filled with text")
-                    checkLogin = false
+                    Toast.makeText(this@MainActivity, "Username must be filled", Toast.LENGTH_SHORT).show()
                 }
                 //pengecekan apakah inputan password kosong
                 if (passtemp.isEmpty()) {
-                    inputPassword.setError("Password must be filled with text")
-                    checkLogin = false
+                    Toast.makeText(this@MainActivity, "Password must be filled", Toast.LENGTH_SHORT).show()
                 }
                 if(usertemp==user&&passtemp==pass) checkLogin=true
-                if(usertemp=="admin"&&passtemp=="admin") checkLogin=true
             }
 
             if (!checkLogin) return@OnClickListener
