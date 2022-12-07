@@ -19,6 +19,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.tubes_kelompok10.databinding.ActivityRegisterBinding
@@ -65,60 +66,66 @@ class RegisterActivity : AppCompatActivity() {
             val noTelepon: String = noPhone.text.toString()
 
             if (username.isEmpty()) {
-                inputUsername.setError("Username must be filled with Text")
-                check = false
+                Toast.makeText(this@RegisterActivity, "Username must be filled", Toast.LENGTH_SHORT).show()
             }
-            if (password.isEmpty()) {
-                inputPassword.setError("Password must be filled with Text")
-                check = false
+            else if (password.isEmpty()) {
+                Toast.makeText(this@RegisterActivity, "Password must be filled", Toast.LENGTH_SHORT).show()
+            }
+            else if (email.isEmpty()) {
+                Toast.makeText(this@RegisterActivity, "Email must be filled", Toast.LENGTH_SHORT).show()
+            }
+            else if (tanggalLahir.isEmpty()) {
+                Toast.makeText(this@RegisterActivity, "Tanggal Lahir must be filled", Toast.LENGTH_SHORT).show()
+            }
+            else if (noTelepon.isEmpty()) {
+                Toast.makeText(this@RegisterActivity, "Nomor Telepon must be filled", Toast.LENGTH_SHORT).show()
             }
             else{
                 check=true
-            }
+                mBundle.putString("username",username)
+                mBundle.putString("email",email)
+                mBundle.putString("noPhone",noTelepon)
+                mBundle.putString("tanggalLahir",tanggalLahir)
+                mBundle.putString("password",password)
 
-            mBundle.putString("username",username)
-            mBundle.putString("email",email)
-            mBundle.putString("noPhone",noTelepon)
-            mBundle.putString("tanggalLahir",tanggalLahir)
-            mBundle.putString("password",password)
+                intent.putExtra("register", mBundle)
 
-            intent.putExtra("register", mBundle)
+                createNotificationChannel()
 
-            createNotificationChannel()
+                /*if (username.text.toString().length == 0) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        db.userDao().addUser(
+                            User(
+                                1, "a", "a", 1, "a", "a"
+                            )
+                        )
+                        finish()
+                    }
 
-            /*if (username.text.toString().length == 0) {
+                    startActivity(intent)
+                }
+
                 CoroutineScope(Dispatchers.IO).launch {
                     db.userDao().addUser(
                         User(
-                            1, "a", "a", 1, "a", "a"
+                            (Math.random() * (10000 - 3 + 1)).toInt(),
+                            username.text.toString(),
+                            email.text.toString(),
+                            (Math.random() * (10000 - 3 + 1)).toInt(),
+                            tanggallahir.text.toString(),
+                            password.text.toString()
+
                         )
                     )
                     finish()
                 }
 
+                 */
+
+                sendNotification2()
+
                 startActivity(intent)
             }
-
-            CoroutineScope(Dispatchers.IO).launch {
-                db.userDao().addUser(
-                    User(
-                        (Math.random() * (10000 - 3 + 1)).toInt(),
-                        username.text.toString(),
-                        email.text.toString(),
-                        (Math.random() * (10000 - 3 + 1)).toInt(),
-                        tanggallahir.text.toString(),
-                        password.text.toString()
-
-                    )
-                )
-                finish()
-            }
-
-             */
-
-            sendNotification2()
-
-            startActivity(intent)
         }
 
         val backlogin: Button = findViewById(R.id.backlogin)
