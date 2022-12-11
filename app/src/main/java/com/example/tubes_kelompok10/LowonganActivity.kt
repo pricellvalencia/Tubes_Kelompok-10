@@ -62,8 +62,8 @@ class LowonganActivity : AppCompatActivity() {
                     startActivity(moveProfile)
                     return@setOnNavigationItemReselectedListener
                 }
-                R.id.menu_notification ->{
-                    val intent = Intent(this, NotificationsActivity::class.java)
+                R.id.menu_report ->{
+                    val intent = Intent(this, ReportActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.menu_exit -> {
