@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.SearchView
 import android.widget.Toast
@@ -102,6 +103,11 @@ class LowonganActivity : AppCompatActivity() {
         rvProduk.adapter = adapter
         allLowongan()
 
+        val lamarPekerjaan: Button = findViewById(R.id.lamar_pekerjaan)
+        lamarPekerjaan.setOnClickListener(View.OnClickListener {
+            val moveLamar = Intent(this@LowonganActivity, PelamarActivity::class.java)
+            startActivity(moveLamar)
+        })
     }
 
     private fun allLowongan() {

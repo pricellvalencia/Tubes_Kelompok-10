@@ -66,6 +66,12 @@
                     android:src="@drawable/ic_baseline_delete_24"
                     app:tint="#DC3939"/>
             </LinearLayout>
+
+            <Button
+                android:id="@+id/lamar_pekerjaan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Lamar Pekerjaan" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
