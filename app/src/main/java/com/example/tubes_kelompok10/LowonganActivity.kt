@@ -24,6 +24,7 @@ import com.example.tubes_kelompok10.adapters.LowonganAdapter
 import com.example.tubes_kelompok10.api.LowonganApi
 import com.example.tubes_kelompok10.models.Lowongan
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.JsonObject
 import org.json.JSONObject
 import java.nio.charset.StandardCharsets
 
@@ -97,17 +98,15 @@ class LowonganActivity : AppCompatActivity() {
             startActivityForResult(i, LAUNCH_ADD_ACTIVITY)
         }
 
+
+
         val rvProduk = findViewById<RecyclerView>(R.id.rv_lowongan)
         adapter = LowonganAdapter(ArrayList(), this)
         rvProduk.layoutManager = LinearLayoutManager(this)
         rvProduk.adapter = adapter
         allLowongan()
 
-        val lamarPekerjaan: Button = findViewById(R.id.lamar_pekerjaan)
-        lamarPekerjaan.setOnClickListener(View.OnClickListener {
-            val moveLamar = Intent(this@LowonganActivity, PelamarActivity::class.java)
-            startActivity(moveLamar)
-        })
+
     }
 
     private fun allLowongan() {
@@ -115,8 +114,9 @@ class LowonganActivity : AppCompatActivity() {
         val stringRequest: StringRequest = object :
             StringRequest (Method.GET, LowonganApi.GET_ALL_URL, Response.Listener { response ->
                 val gson = Gson()
+                val JsonObject = JSONObject(response)
                 var lowongan: Array<Lowongan> =
-                    gson.fromJson(response, Array<Lowongan>::class.java)
+                    gson.fromJson(JsonObject.getJSONArray("data").toString(), Array<Lowongan>::class.java)
 
                 adapter!!.setLowonganList(lowongan)
                 adapter!!.filter.filter(svLowongan!!.query)

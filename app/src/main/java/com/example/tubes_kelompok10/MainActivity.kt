@@ -94,9 +94,9 @@ class MainActivity : AppCompatActivity() {
         mBundle = intent.getBundleExtra("register")!!
         user = mBundle.getString("username")!!
         pass = mBundle.getString("password")!!
-        email = mBundle.getString("email")!!
-        phone = mBundle.getString("noPhone")!!
-        tgl = mBundle.getString("tanggalLahir")!!
+//        email = mBundle.getString("email")!!
+//        phone = mBundle.getString("noPhone")!!
+//        tgl = mBundle.getString("tanggalLahir")!!
 
     }
 }

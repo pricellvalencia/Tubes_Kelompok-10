@@ -22,7 +22,18 @@ import android.os.Build
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.tubes_kelompok10.api.LowonganApi
 import com.example.tubes_kelompok10.databinding.ActivityRegisterBinding
+import com.example.tubes_kelompok10.models.Lowongan
+import com.example.tubes_kelompok10.models.Register
+import com.google.gson.Gson
+import org.json.JSONObject
+import java.nio.charset.StandardCharsets
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -36,6 +47,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var tglLahir : TextInputEditText
     private lateinit var password : TextInputEditText
     private lateinit var btnRegister : Button
+    private var queue: RequestQueue? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +58,8 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
         setTitle("")
 
+        queue = Volley.newRequestQueue( this)
+
         username = findViewById(R.id.username)
         email = findViewById(R.id.email)
         noPhone = findViewById(R.id.phone)
@@ -53,10 +67,11 @@ class RegisterActivity : AppCompatActivity() {
         password = findViewById(R.id.password)
         btnRegister = findViewById(R.id.RegisterBtn)
 
+
         RegisterBtn.setOnClickListener{
             var check = false
-            val intent = Intent(this, MainActivity::class.java)
-            val mBundle = Bundle()
+//            val intent = Intent(this, MainActivity::class.java)
+//            val mBundle = Bundle()
 
 
             val username: String = username.text.toString()
@@ -82,13 +97,14 @@ class RegisterActivity : AppCompatActivity() {
             }
             else{
                 check=true
-                mBundle.putString("username",username)
-                mBundle.putString("email",email)
-                mBundle.putString("noPhone",noTelepon)
-                mBundle.putString("tanggalLahir",tanggalLahir)
-                mBundle.putString("password",password)
-
-                intent.putExtra("register", mBundle)
+                register()
+//                mBundle.putString("username",username)
+//                mBundle.putString("email",email)
+//                mBundle.putString("noPhone",noTelepon)
+//                mBundle.putString("tanggalLahir",tanggalLahir)
+//                mBundle.putString("password",password)
+//
+//                intent.putExtra("register", mBundle)
 
                 createNotificationChannel()
 
@@ -124,7 +140,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 sendNotification2()
 
-                startActivity(intent)
+//                startActivity(intent)
             }
         }
 
@@ -135,6 +151,72 @@ class RegisterActivity : AppCompatActivity() {
         })
     }
 
+    private fun register() {
+        val register = Register(
+            binding.username.text.toString(),
+            binding.email.text.toString(),
+            binding.phone.text.toString(),
+            binding.tanggallahir.text.toString(),
+            binding.password.text.toString(),
+        )
+        val stringRequest: StringRequest =
+            object : StringRequest(Method.POST, LowonganApi.register1, Response.Listener { response ->
+//                val gson = Gson()
+//                val JsonObject = JSONObJsonObject.getJSONArray("message").toString()ject(response)
+//                var register = gson.fromJson(JsonObject.getJSONArray("message").toString(), Register::class.java)
+
+                if (register != null)
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        JSONObject(response).getString("message"),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                val intent = Intent(this, MainActivity::class.java)
+                val mBundle = Bundle()
+                mBundle.putString("username", binding.username.text.toString())
+                mBundle.putString("password", binding.password.text.toString(),)
+
+                intent.putExtra("register", mBundle)
+                startActivity(intent)
+                finish()
+
+
+            }, Response.ErrorListener { error ->
+
+                try {
+                    val responseBody = String(error.networkResponse.data, StandardCharsets.UTF_8)
+                    val errors = JSONObject(responseBody)
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        errors.getString("message"),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: Exception) {
+                    Toast.makeText(this@RegisterActivity, e.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers["Accept"] = "application/json"
+                    return headers
+                }
+
+                @Throws(AuthFailureError::class)
+                override fun getBody(): ByteArray {
+                    val gson = Gson()
+                    val requestBody = gson.toJson(register)
+                    return requestBody.toByteArray(StandardCharsets.UTF_8)
+                }
+
+                override fun getBodyContentType(): String {
+                    return "application/json"
+                }
+            }
+        queue!!.add(stringRequest)
+    }
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Notification Title"
