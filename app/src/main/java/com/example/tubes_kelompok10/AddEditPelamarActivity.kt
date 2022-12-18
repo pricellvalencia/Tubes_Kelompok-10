@@ -21,6 +21,9 @@ import java.nio.charset.StandardCharsets
 class AddEditPelamarActivity : AppCompatActivity() {
 
     private var etNama: EditText? = null
+    private var etJenisKelamin: EditText? = null
+    private var etTglLahir: EditText? = null
+    private var etAlamat: EditText? = null
     private var etEmail: EditText? = null
     private var etPendidikan: EditText? = null
     private var layoutLoading: LinearLayout? = null
@@ -32,6 +35,9 @@ class AddEditPelamarActivity : AppCompatActivity() {
 
         queue = Volley.newRequestQueue(this)
         etNama = findViewById(R.id.et_nama)
+        etJenisKelamin = findViewById(R.id.et_jenisKelamin)
+        etTglLahir = findViewById(R.id.et_tglLahir)
+        etAlamat = findViewById(R.id.et_alamatPelamar)
         etEmail = findViewById(R.id.et_email)
         etPendidikan = findViewById(R.id.et_pendidikan)
         layoutLoading = findViewById(R.id.layout_loading)
@@ -63,6 +69,9 @@ class AddEditPelamarActivity : AppCompatActivity() {
                 val pelamar = gson.fromJson(response, Pelamar::class.java)
 
                 etNama!!.setText(pelamar.nama)
+                etJenisKelamin!!.setText(pelamar.jeniskelamin)
+                etTglLahir!!.setText(pelamar.tglLahir)
+                etAlamat!!.setText(pelamar.alamat)
                 etEmail!!.setText(pelamar.email)
                 etPendidikan!!.setText(pelamar.pendidikan)
 
@@ -97,18 +106,30 @@ class AddEditPelamarActivity : AppCompatActivity() {
         setLoading(true)
 
         if (etNama!!.text.toString().isEmpty()) {
-            Toast.makeText(this@AddEditPelamarActivity, "Nama perusahaan must be filled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@AddEditPelamarActivity, "Nama must be filled", Toast.LENGTH_SHORT).show()
+        }
+        if (etJenisKelamin!!.text.toString().isEmpty()) {
+            Toast.makeText(this@AddEditPelamarActivity, "Jenis kelamin must be filled", Toast.LENGTH_SHORT).show()
+        }
+        if (etTglLahir!!.text.toString().isEmpty()) {
+            Toast.makeText(this@AddEditPelamarActivity, "Tanggal lahir must be filled", Toast.LENGTH_SHORT).show()
+        }
+        if (etAlamat!!.text.toString().isEmpty()) {
+            Toast.makeText(this@AddEditPelamarActivity, "Alamat must be filled", Toast.LENGTH_SHORT).show()
         }
         else if (etEmail!!.text.toString().isEmpty()) {
-            Toast.makeText(this@AddEditPelamarActivity, "Posisi must be filled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@AddEditPelamarActivity, "Email must be filled", Toast.LENGTH_SHORT).show()
         }
         else if (etPendidikan!!.text.toString().isEmpty()) {
-            Toast.makeText(this@AddEditPelamarActivity, "Tanggal Penutupan must be filled", Toast.LENGTH_SHORT)
+            Toast.makeText(this@AddEditPelamarActivity, "Pendidikan must be filled", Toast.LENGTH_SHORT)
                 .show()
         }
         else{
             val pelamar = Pelamar(
                 etNama!!.text.toString(),
+                etJenisKelamin!!.text.toString(),
+                etTglLahir!!.text.toString(),
+                etAlamat!!.text.toString(),
                 etEmail!!.text.toString(),
                 etPendidikan!!.text.toString()
 
@@ -168,6 +189,9 @@ class AddEditPelamarActivity : AppCompatActivity() {
 
         val pelamar = Pelamar(
             etNama!!.text.toString(),
+            etJenisKelamin!!.text.toString(),
+            etTglLahir!!.text.toString(),
+            etAlamat!!.text.toString(),
             etEmail!!.text.toString(),
             etPendidikan!!.text.toString()
         )
