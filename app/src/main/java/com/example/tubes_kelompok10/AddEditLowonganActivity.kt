@@ -36,7 +36,11 @@ class AddEditLowonganActivity : AppCompatActivity() {
         edTanggalPenutupan = findViewById(R.id.ed_tanggalPenutupan)
         layoutLoading = findViewById(R.id.layout_loading)
 
-
+        val btnPelamar = findViewById<Button>(R.id.daftar_pelamar)
+        btnPelamar.setOnClickListener(View.OnClickListener {
+            val movePelamarActivity = Intent(this@AddEditLowonganActivity, PelamarActivity::class.java)
+            startActivity(movePelamarActivity)
+        })
         val btnCancel = findViewById<Button>(R.id.btn_cancel)
         btnCancel.setOnClickListener {finish()}
         val btnSave = findViewById<Button>(R.id.btn_save)

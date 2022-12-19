@@ -66,10 +66,10 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/lamar_pekerjaan"
+                android:id="@+id/daftar_pelamar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Lamar Pekerjaan" />
+                android:text="Daftar Pelamar" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
