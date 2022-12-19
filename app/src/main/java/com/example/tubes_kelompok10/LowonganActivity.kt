@@ -118,14 +118,14 @@ class LowonganActivity : AppCompatActivity() {
         srLowongan!!.isRefreshing = true
         val stringRequest: StringRequest = object :
             StringRequest (Method.GET, LowonganApi.GET_ALL_URL, Response.Listener { response ->
-//                val gson = Gson()
-//                val JsonObject = JSONObject(response)
-//                var lowongan: Array<Lowongan> =
-//                    gson.fromJson(JsonObject.getJSONArray("data").toString(), Array<Lowongan>::class.java)
-
                 val gson = Gson()
+                val JsonObject = JSONObject(response)
                 var lowongan: Array<Lowongan> =
-                    gson.fromJson(response, Array<Lowongan>::class.java)
+                    gson.fromJson(JsonObject.getJSONArray("data").toString(), Array<Lowongan>::class.java)
+
+//                val gson = Gson()
+//                var lowongan: Array<Lowongan> =
+//                    gson.fromJson(response, Array<Lowongan>::class.java)
 
                 adapter!!.setLowonganList(lowongan)
                 adapter!!.filter.filter(svLowongan!!.query)
