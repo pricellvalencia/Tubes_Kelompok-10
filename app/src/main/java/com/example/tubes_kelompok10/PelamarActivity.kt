@@ -45,35 +45,7 @@ class PelamarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pelamar)
 
-        bottomNav = findViewById(R.id.bottomNav) as BottomNavigationView
-        bottomNav.setOnNavigationItemReselectedListener {
-            when (it.itemId) {
-                R.id.menu_home -> {
-                    val intent = Intent(this, LowonganActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.menu_location -> {
-                    val intent = Intent(this, LocationActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.menu_profil -> {
-                    var moveProfile: Intent
-                    moveProfile = Intent(this, ProfilActivity::class.java)
-                    moveProfile.putExtra("Person", intent.getBundleExtra("Person"))
-                    startActivity(moveProfile)
-                    return@setOnNavigationItemReselectedListener
-                }
-                R.id.menu_report ->{
-                    val intent = Intent(this, ReportActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.menu_exit -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                }
 
-            }
-        }
         queue = Volley.newRequestQueue(this)
         layoutLoading = findViewById(R.id.layout_loading)
         srPelamar =  findViewById(R.id.sr_pelamar)
@@ -103,11 +75,7 @@ class PelamarActivity : AppCompatActivity() {
         rvProduk.adapter = adapter
         allPelamar()
 
-        val lamarPekerjaan: Button = findViewById(R.id.lamar_pekerjaan)
-        lamarPekerjaan.setOnClickListener(View.OnClickListener {
-            val moveLamar = Intent(this@PelamarActivity, PelamarActivity::class.java)
-            startActivity(moveLamar)
-        })
+
     }
 
     private fun allPelamar() {
@@ -123,10 +91,10 @@ class PelamarActivity : AppCompatActivity() {
                 srPelamar!!.isRefreshing = false
 
                 if (pelamar.isEmpty())
-                    Toast.makeText(this@PelamarActivity, "Data Berhasil Diambil!!", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@PelamarActivity, "Data kosong", Toast.LENGTH_SHORT)
                         .show()
                 else
-                    Toast.makeText(this@PelamarActivity, "Data Kosong", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@PelamarActivity, "Data Berhasil Diambil!!", Toast.LENGTH_SHORT)
                         .show()
             }, Response.ErrorListener { error ->
                 srPelamar!!.isRefreshing = false

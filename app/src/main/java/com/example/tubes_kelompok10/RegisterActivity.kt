@@ -70,8 +70,8 @@ class RegisterActivity : AppCompatActivity() {
 
         RegisterBtn.setOnClickListener{
             var check = false
-//            val intent = Intent(this, MainActivity::class.java)
-//            val mBundle = Bundle()
+            val intent = Intent(this, MainActivity::class.java)
+            val mBundle = Bundle()
 
 
             val username: String = username.text.toString()
@@ -97,14 +97,14 @@ class RegisterActivity : AppCompatActivity() {
             }
             else{
                 check=true
-                register()
-//                mBundle.putString("username",username)
-//                mBundle.putString("email",email)
-//                mBundle.putString("noPhone",noTelepon)
-//                mBundle.putString("tanggalLahir",tanggalLahir)
-//                mBundle.putString("password",password)
-//
-//                intent.putExtra("register", mBundle)
+//                register()
+                mBundle.putString("username",username)
+                mBundle.putString("email",email)
+                mBundle.putString("noPhone",noTelepon)
+                mBundle.putString("tanggalLahir",tanggalLahir)
+                mBundle.putString("password",password)
+
+                intent.putExtra("register", mBundle)
 
                 createNotificationChannel()
 
@@ -140,7 +140,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 sendNotification2()
 
-//                startActivity(intent)
+                startActivity(intent)
             }
         }
 

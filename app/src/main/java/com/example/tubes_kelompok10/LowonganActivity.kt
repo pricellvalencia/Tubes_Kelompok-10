@@ -98,6 +98,11 @@ class LowonganActivity : AppCompatActivity() {
             startActivityForResult(i, LAUNCH_ADD_ACTIVITY)
         }
 
+        val btnPelamar = findViewById<Button>(R.id.daftar_pelamar)
+        btnPelamar.setOnClickListener(View.OnClickListener {
+            val movePelamarActivity = Intent(this@LowonganActivity, PelamarActivity::class.java)
+            startActivity(movePelamarActivity)
+        })
 
 
         val rvProduk = findViewById<RecyclerView>(R.id.rv_lowongan)
@@ -113,20 +118,24 @@ class LowonganActivity : AppCompatActivity() {
         srLowongan!!.isRefreshing = true
         val stringRequest: StringRequest = object :
             StringRequest (Method.GET, LowonganApi.GET_ALL_URL, Response.Listener { response ->
+//                val gson = Gson()
+//                val JsonObject = JSONObject(response)
+//                var lowongan: Array<Lowongan> =
+//                    gson.fromJson(JsonObject.getJSONArray("data").toString(), Array<Lowongan>::class.java)
+
                 val gson = Gson()
-                val JsonObject = JSONObject(response)
                 var lowongan: Array<Lowongan> =
-                    gson.fromJson(JsonObject.getJSONArray("data").toString(), Array<Lowongan>::class.java)
+                    gson.fromJson(response, Array<Lowongan>::class.java)
 
                 adapter!!.setLowonganList(lowongan)
                 adapter!!.filter.filter(svLowongan!!.query)
                 srLowongan!!.isRefreshing = false
 
                 if (lowongan.isEmpty())
-                    Toast.makeText(this@LowonganActivity, "Data Berhasil Diambil!!", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@LowonganActivity, "Data Kosong", Toast.LENGTH_SHORT)
                         .show()
                 else
-                    Toast.makeText(this@LowonganActivity, "Data Kosong", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@LowonganActivity, "Data Berhasil Diambil!!", Toast.LENGTH_SHORT)
                         .show()
             }, Response.ErrorListener { error ->
                 srLowongan!!.isRefreshing = false
